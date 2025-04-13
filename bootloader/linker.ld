@@ -1,20 +1,28 @@
 /* bootloader/linker.ld */
-OUTPUT_FORMAT(pei-x86-64)
+OUTPUT_FORMAT("pei-x86-64")
+SEARCH_DIR(/usr/lib)
+SEARCH_DIR(/usr/lib/gnuefi)
 ENTRY(efi_main)
 
 SECTIONS
 {
-  . = 0x100000; /* Load address for the bootloader */
-
   .text : {
     *(.text)
+    *(.text.*)
+    *(.gnu.linkonce.t.*)
   }
 
   .data : {
+    *(.rodata)
+    *(.rodata.*)
     *(.data)
+    *(.data.*)
+    *(.gnu.linkonce.d.*)
   }
 
   .bss : {
     *(.bss)
+    *(.bss.*)
+    *(.gnu.linkonce.b.*)
   }
 }
